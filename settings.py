@@ -1,3 +1,7 @@
+# Cos I don't want to use absolute paths:
+import os
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
+
 # Django settings for passwords project.
 
 DEBUG = True
@@ -27,7 +31,7 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'CET'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -78,9 +82,9 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'passwords.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    # The path shall not be absolute (sort of):
+    os.path.join(PROJECT_PATH, 'templates')
+    
 )
 
 INSTALLED_APPS = (
@@ -89,8 +93,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
+    'web',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
