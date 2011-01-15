@@ -1,28 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<h1>Passwords</h1>
-<h2>Latest:</h2>
-{% if latest_pass_list %}
-    <ul>
-    {% for pass in latest_pass_list %}
-        <li>{{ pass.password }}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No passwords are available.</p>
-{% endif %}
+{% extends "web/layout.html" %}
+
+{% block content %}
+<h2>Current number of passwords:</h2>
+<strong>{{ pass_count }}</strong>
 <h2>
-Add your passwords (seperate them with a new line):
+Add your passwords:
 </h2>
 <form action="/add/" method="post">
 {% csrf_token %}
-<textarea rows="4" cols="40" name="passwords"></textarea><br />
+<input type="password" name="pw_pass" />
 <input type="submit" value="Add" />
 </form>
-</body>
-</html>
+{% endblock %}

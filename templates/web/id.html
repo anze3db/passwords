@@ -1,0 +1,19 @@
+{% extends "web/layout.html" %}
+
+{% block content %}
+{% if pass_count == 0 %}
+Congratulations! Your password is unique!
+{% else %}
+	{% if pass_count < 10 %}
+	Your password is used by {{pass_count}} other people, nothing to worry about.
+	{% else %}
+		{% if pass_count < 1000 %}
+		Your password is used by {{pass_count}} other people, you should consider changing it.
+		{% else %}
+		Your password is used by {{pass_count}} other people, you are using a weak password and should change it imidiatly!
+		{% endif %}
+	{% endif %}
+{% endif %}
+<a href="/">Enter a new password</a>
+{% endblock %}
+
