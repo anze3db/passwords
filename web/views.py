@@ -6,21 +6,18 @@ from django.http import HttpResponseRedirect, HttpResponseBadRequest
 
 
 def index(request):
-    # I don't really like .reverse()[:5] part but it will have to do for now
-    pass_count = Password.objects.all().count()
     
-    return render_to_response('web/index.html', {'pass_count': pass_count},
+    return render_to_response('web/index.html', {'pass_count': Password.objects.all().count()},
                                                  context_instance=RequestContext(request))
     
 def add(request):
     # This here is some really primitive error handling:
-    # I would use trim() but there is probably someone out there with a password containing only spaces :)
-    
+    # I would use trim() but there is probably someone out there with a password containing only spaces :)    
     if(request.method != "POST" or len(request.POST['pw_pass']) == 0):        
         return HttpResponseBadRequest("You have made a nono, <a href=\"/\">go back</a>.")        
     
-    #if(request.POST["cb_add"] == "on"):    
-    p = Password(password=request.POST["pw_pass"])
+    # Source_id should not be hardcoded but it's late:    
+    p = Password(password=request.POST["pw_pass"], Source_id=1)
     p.save()
     
     return HttpResponseRedirect('/id/' + str(p.id))
