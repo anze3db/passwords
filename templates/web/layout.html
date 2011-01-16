@@ -3,10 +3,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <title>{% block title %}Passwords{% endblock %}</title>
+    <link href="/site_media/reset.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="/site_media/960.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="/site_media/site.css" rel="stylesheet" type="text/css" media="screen" />
 </head>
 <body>
-<h1>Passwords</h1>
+<div id="header-bg">
+	<div class="container_12">
+		<div class="grid_12"  id="header-txt">
+		<h1>Passwords</h1>
+		</div>
+	</div>
+</div>
+<div class="container_12">
+<div class="grid_12" id="content">
 {% block content %}
 {% endblock %}
+</div>
+</div>
+
 </body>
 </html>
