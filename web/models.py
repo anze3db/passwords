@@ -6,7 +6,7 @@ class Source(models.Model):
         return self.name
     
 class Password(models.Model):
-    password = models.CharField(max_length = 1000)
+    password = models.CharField(max_length = 1000, blank = True)
     Source = models.ForeignKey(Source)
     def __unicode__(self):
         return self.password + " from " + self.Source.name
