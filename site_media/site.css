@@ -11,3 +11,5 @@ h2 { padding: 10px 0px; }
 #content h2 { text-align: left; }
 
 #pass-count { font-size: xx-large; }
+
+input { font-size: x-large; padding:4px; }
