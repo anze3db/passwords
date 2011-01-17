@@ -1,9 +1,10 @@
 from web.models import Password
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect, HttpResponseBadRequest
+from django.http import HttpResponseRedirect
 
-
+ERROR_NOT_FOUND = "You have stumbled upon a page that does not exist. Had back to <a href=\"/\">charted waters</a> as soon as you are ready."
+ERROR_BAD_REQUEST = "I see what you did there."
 
 def index(request):
     
@@ -13,8 +14,10 @@ def index(request):
 def add(request):
     # This here is some really primitive error handling:
     # I would use trim() but there is probably someone out there with a password containing only spaces :)    
-    if(request.method != "POST" or len(request.POST['pw_pass']) == 0):        
-        return HttpResponseBadRequest("You have made a nono, <a href=\"/\">go back</a>.")        
+    if(request.method != "POST" or len(request.POST['pw_pass']) == 0):       
+        # TODO: Should set status code 400 
+        return render_to_response('web/error.html', {'error_msg': ERROR_BAD_REQUEST},
+                                                 context_instance=RequestContext(request))     
     
     # Source_id should not be hardcoded but it's late:    
     p = Password(password=request.POST["pw_pass"], Source_id=1)
@@ -28,6 +31,11 @@ def id(request, id):
     count = Password.objects.all().filter(password=p.password).count() - 1
     return render_to_response('web/id.html', {'pass_count': count},
                                                  context_instance=RequestContext(request))
+    
+def error(request):
+    # TODO: Should set status code 404
+    return render_to_response('web/error.html', {'error_msg': ERROR_NOT_FOUND},
+                                                 context_instance=RequestContext(request))    
                 
     
                
