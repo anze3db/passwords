@@ -7,7 +7,7 @@ urlpatterns = patterns('',
                        
     (r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_DOC_ROOT}),
-    (r'^admin', include(admin.site.urls)),
+    (r'^admin/', include(admin.site.urls)),
     (r'^add/', 'web.views.add'),
     (r'^id/(\d+)', 'web.views.id'),  
     (r'^$', 'web.views.index'),  
