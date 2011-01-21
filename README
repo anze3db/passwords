@@ -1,0 +1,13 @@
+How to get the site working on your localhost?
+
+You'll need python + django and an SQL database
+
+run "git clone git@github.com:Smotko/passwords.git"
+edit settings.py and configure your database, run "python manage.py syncdb" -- this will create the needed tables in your db
+run "python manage.py runserver" and point your browser to http://localhost:8000/
+Have fun :)
+
+IMPORTANT:
+The password field in web_password table should use utf8_bin encoding
+(or something similar if your not using MySQL). There is no way to set this
+with django so you'll have to alter the field by hand...
