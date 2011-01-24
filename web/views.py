@@ -1,11 +1,15 @@
-from web.models import Password
+from web.models import Password, PasswordUnique
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, Http404
 
 def index(request):
     
-    return render_to_response('web/index.html', {'pass_count': Password.objects.all().count()},
+    common_passwords = PasswordUnique.objects.all().order_by('count').reverse()[:5]
+    
+    return render_to_response('web/index.html', {'pass_count': Password.objects.all().count(),
+                                                 'common_passwords' : common_passwords,},
+                                                 
                                                  context_instance=RequestContext(request))
     
 def add(request):

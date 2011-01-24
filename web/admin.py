@@ -1,4 +1,4 @@
-from web.models import Password, Source
+from web.models import PasswordUnique, Password, Source
 from web.forms import PasswordsForm
 from django.contrib import admin
 from django.db import transaction
@@ -6,6 +6,7 @@ from django.db import transaction
 
 
 admin.site.register(Source)
+admin.site.register(PasswordUnique)
 
 class PasswordAdmin(admin.ModelAdmin):
     form = PasswordsForm

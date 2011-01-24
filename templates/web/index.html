@@ -3,7 +3,12 @@
 {% block content %}
 <h2>Current number of passwords:</h2>
 <span id="pass-count">{{ pass_count }}</span>
-
+<h2>Most common passwords:</h2>
+<ol>
+{% for p in common_passwords %}
+<li>{{ p.password }} [{{p.count}}]</li>
+{% endfor %}
+</ol>
 <h2>
 Add your password:
 </h2>
