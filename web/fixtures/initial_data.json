@@ -1,0 +1,41 @@
+[
+  {
+    "model": "web.source",
+    "pk": 1,
+    "fields": {
+      "name": "Site"
+    }
+  },
+  {
+    "model": "web.strength",
+    "pk": 1,
+    "fields": {
+      "name": "Unique",
+      "description": "Was the password found in the database"
+    }
+  },
+  {
+    "model": "web.strength",
+    "pk": 2,
+    "fields": {
+      "name": "Length",
+      "description": "Is the password long enough"
+    }
+  },
+  {
+    "model": "web.strength",
+    "pk": 3,
+    "fields": {
+      "name": "Mixed case",
+      "description": "Does the password use mixed case"
+    }
+  },
+  {
+    "model": "web.strength",
+    "pk": 4,
+    "fields": {
+      "name": "Strange characters",
+      "description": "Does the password contain strange characters"
+    }
+  }
+]
