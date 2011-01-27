@@ -19,7 +19,7 @@ def add(request):
         raise Http404("Trying to add without using POST")   
     
     # Source_id should not be hardcoded but it's late:    
-    p = Password(password=request.POST["pw_pass"], Source_id=1)
+    p = Password(password=request.POST["pw_pass"], source_id=1)
     p.save()
     
     return HttpResponseRedirect('/id/' + str(p.id))
