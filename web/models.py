@@ -65,9 +65,13 @@ class Password(models.Model):
         if self.pk is None:        
             # Increment the number of passwords in the source:
             # [this could be slow for batch insert]
-            if 'batch' in kwargs.keys():
+            
+            if 'batch' not in kwargs.keys():
+                
                 self.source.count += 1
-                self.source.save()       
+                self.source.save()  
+            else:
+                del kwargs['batch']        
                 
             # Insert/increment PasswordUnique:
             pu = PasswordUnique()
@@ -100,6 +104,7 @@ class PasswordUnique(models.Model):
         # If we are saving a record:        
         try:
             # We are checking if the password was already entered:
+            
             pu = PasswordUnique.objects.get(password = self.password)
             pu.count += 1
             pu.save()
