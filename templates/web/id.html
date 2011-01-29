@@ -2,26 +2,12 @@
 
 {% block content %}
 <h2>Result:</h2>
-{% if pass_count == 0 %}
-    Congratulations! Your password is unique!
-{% else %}
-	{% if pass_count < 10 %}
-	Your password is used by {{pass_count}} other people, nothing to worry about.
-	{% else %}
-		{% if pass_count < 1000 %}
-		Your password is used by {{pass_count}} other people, you should consider changing it.
-		{% else %}
-		Your password is used by {{pass_count}} other people. It's a very common password and you should change it <acronym title="as soon as possible">ASAP</acronym>!
-		{% endif %}
-	{% endif %}
-{% endif %}
-{% if pass_strength == 0 %}
-    {% if pass_count < 10 %}
-        <br><br>However, it is not very strong. Try using some numbers or these %&*#@!$ characters.
-    {% else %}
-        <br><br>Also, it is not very strong. Try using more imagination or numbers and these %&*#@!$ characters.
-    {% endif %}
-{% endif %}
+{{ password.unique.count }}
+<ul>
+{% for s in password.unique.strength.all %}
+<li>{{s.name}} - {{s.description}}</li>
+{% endfor %}
+</ul>
 <br><br><a href="/">Enter a new password</a>
 {% endblock %}
 

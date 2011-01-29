@@ -29,7 +29,7 @@ def id(request, id):
     p = get_object_or_404(Password, pk=id)
     # count() - 1 because the password we are looking for was already entered: 
     count = Password.objects.all().filter(password=p.password).count() - 1
-    return render_to_response('web/id.html', {'pass_count': count, 'pass_strength': p.pass_strength()},
+    return render_to_response('web/id.html', {'pass_count': count, 'password': p},
                                                  context_instance=RequestContext(request))    
  
                 

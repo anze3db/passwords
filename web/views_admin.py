@@ -18,6 +18,7 @@ def batch(request):
             ps = Password(password=chunk, source_id=request.POST['source'])
             
             ps.save(batch = True)
+            
             i += 1
             print i
     

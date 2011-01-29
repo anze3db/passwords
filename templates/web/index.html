@@ -6,7 +6,7 @@
 <h2>Most common passwords:</h2>
 <ol>
 {% for p in common_passwords %}
-<li>{{ p.password }} [{{p.count}}]</li>
+<li>{{ p.unique }} [{{p.count}}]</li>
 {% endfor %}
 </ol>
 <h2>
