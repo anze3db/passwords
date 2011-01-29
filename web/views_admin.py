@@ -13,14 +13,10 @@ def batch(request):
         
         
         # Insert the passwords:
-        i = 0
+        
         for chunk in request.FILES['passwords']:
-            ps = Password(password=chunk, source_id=request.POST['source'])
-            
-            ps.save(batch = True)
-            
-            i += 1
-            print i
+            ps = Password(password=chunk.rstrip('\r\n'), source_id=request.POST['source'])            
+            ps.save(batch = True)            
     
         # Update source count:                    
         src = Source.objects.get(pk = request.POST['source'])
