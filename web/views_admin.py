@@ -15,6 +15,7 @@ def batch(request):
         # Insert the passwords:
         
         for chunk in request.FILES['passwords']:
+            
             ps = Password(password=chunk.rstrip('\r\n'), source_id=request.POST['source'])            
             ps.save(batch = True)            
     
@@ -29,7 +30,8 @@ def batch(request):
 
         return HttpResponseRedirect('/admin/web/password')
        
-    return render_to_response('admin/web/password/batch.html', {'form': PasswordsForm(),},
+    return render_to_response('admin/web/password/batch.html', {'form': PasswordsForm(),
+                                                                'num_unprocessed': Password.objects.all().filter(processed = False).count()},
                                                  
                                                  context_instance=RequestContext(request))
 

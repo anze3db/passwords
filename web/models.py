@@ -58,7 +58,6 @@ class PasswordUnique(models.Model):
         if len([x for x in self.unique if not x.isalnum()]) > 0: 
             conditions_met += 1
             self.strength.add(self.STRENGTH_CHARS)
-        
         return conditions_met
     
 class Password(models.Model):
@@ -66,7 +65,8 @@ class Password(models.Model):
      
     password = models.CharField(max_length = 1000)
     source = models.ForeignKey(Source)
-    unique = models.ForeignKey(PasswordUnique)
+    unique = models.ForeignKey(PasswordUnique, blank = True, null = True)
+    processed = models.BooleanField(default = False)
     
         
     def __unicode__(self):
@@ -75,38 +75,39 @@ class Password(models.Model):
     def save(self, *args, **kwargs):
         
         if self.pk is None:        
-            # Increment the number of passwords in the source:
-            # [this could be slow for batch insert]
-            
-            if 'batch' not in kwargs.keys():
-                
-                self.source.count += 1
-                self.source.save()  
-            else:
-                del kwargs['batch']        
-                
-            # Insert/increment PasswordUnique:
-            
-                    # If we are saving a record:        
-            try:
-                # We are checking if the password was already entered:   
-                      
-                pu = PasswordUnique.objects.get(unique = self.password)
-                pu.count += 1            
-                pu.save()
-                self.unique = pu             
-                
-                           
-            except PasswordUnique.DoesNotExist:
-                # If the password is does not yet exist we insert it:
-                pu = PasswordUnique()
-                pu.unique = self.password
-                pu.save()
-                pu.pass_strength()
-                self.unique = pu
 
-            super(Password, self).save(*args, **kwargs)
+            
+            if 'batch' in kwargs.keys():
+                del kwargs['batch']
+                # We just save the password... unique processing will be don by a cron job
+                super(Password, self).save(*args, **kwargs)
+                return
+
+            # Increment the number of passwords in the source:
+            self.source.count += 1
+            self.source.save()     
+  
+            self.process_unique()
+
+        super(Password, self).save(*args, **kwargs)
             
             
+    def process_unique(self):
         
-        # Editing passwords is currently not supported                 
+        # We are checking if the password was already entered:
+        if(PasswordUnique.objects.all().filter(unique = self.password).count > 0):       
+      
+            pu = PasswordUnique()
+            pu.unique = self.password
+            pu.save()
+            pu.pass_strength()
+            self.unique = pu  
+                                 
+        else:
+            
+            pu = PasswordUnique.objects.get(unique = self.password)
+            pu.count += 1            
+            pu.save()
+            self.unique = pu        
+        
+        self.processed = True                

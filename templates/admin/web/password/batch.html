@@ -35,7 +35,7 @@
 {% endif %}{% endif %}
 {% endblock %}
 <h1>Add lots of passwords</h1>
-<p>I don't really know how large the file can be.</p>
+<p>Number of unprocessed in queue: <strong>{{num_unprocessed}}</strong></p>
 <form enctype="multipart/form-data" action="" method="post" id="batch_form">{% csrf_token %}{% block form_top %}{% endblock %}
 <div>
 {{ form }}
