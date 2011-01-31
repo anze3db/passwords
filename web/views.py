@@ -7,7 +7,7 @@ def index(request):
     
     common_passwords = PasswordUnique.objects.all().order_by('count').reverse()[:5]
     
-    return render_to_response('web/index.html', {'pass_count': Password.objects.all().count(),
+    return render_to_response('web/index.html', {'pass_count': Password.objects.all().filter(processed=True).count(),
                                                  'common_passwords' : common_passwords,},
                                                  
                                                  context_instance=RequestContext(request))
