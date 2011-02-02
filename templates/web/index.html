@@ -1,20 +1,35 @@
 {% extends "web/layout.html" %}
-
 {% block content %}
-<h2>Current number of passwords:</h2>
-<span id="pass-count">{{ pass_count }}</span>
-<h2>Most common passwords:</h2>
-<ol>
-{% for p in common_passwords %}
-<li>{{ p.unique }} [{{p.count}}]</li>
-{% endfor %}
-</ol>
-<h2>
-Add your password:
-</h2>
+<div class="grid_8">
+<h2>Add a password:</h2>
+<p>Imagine this is a standard login page and you have to choose a password:</p>
+<div id="password-form">
 <form action="/add/" method="post">
 {% csrf_token %}
-<input type="password" name="pw_pass" />
+<input type="password" name="pw_pass1" />
+<input type="password" name="pw_pass2" />
 <input type="submit" value="Add" />
 </form>
+</div>
+</div>
+<div class="grid_4">
+<h2>Current # of passwords:</h2>
+<p>From many different sources.</p>
+<div id="pass-count">{{ pass_count }}</div>
+</div>
+<div class="clear"></div>
+<hr />
+<div class="grid_4">
+<h2>Top {{common_passwords.count}}:</h2>
+<p>This is a list of {{common_passwords.count}} most commonly used passwords of all time. You should avoid them at all cost!</p>
+<ol>
+{% for p in common_passwords %}
+<li title="This password was used {{p.count}} times.">{{ p.unique }}</li>
+{% endfor %}
+</ol>
+</div>
+<div class="grid_8">
+<h2>Graphs:</h2>
+<p>We need lots and lots of nice looking graphs below this paragraph. The graphs should show how badly people suck at choosing their passwords.</p>
+</div>
 {% endblock %}

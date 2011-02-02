@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, Http404
 
 def index(request):
     
-    common_passwords = PasswordUnique.objects.all().order_by('count').reverse()[:5]
+    common_passwords = PasswordUnique.objects.all().order_by('count').reverse()[:10]
     
     return render_to_response('web/index.html', {'pass_count': Password.objects.all().filter(processed=True).count(),
                                                  'common_passwords' : common_passwords,},
@@ -15,11 +15,12 @@ def index(request):
 def add(request):
     # This here is some really primitive error handling:
     # I would use trim() but there is probably someone out there with a password containing only spaces :)    
-    if(request.method != "POST" or len(request.POST['pw_pass']) == 0):       
+    if(request.method != "POST" or len(request.POST['pw_pass1']) == 0):       
         raise Http404("Trying to add without using POST")   
-    
+    if(request.POST['pw_pass1'] != request.POST['pw_pass2']):
+        raise Http404("Passwords do not match")
     # Source_id should not be hardcoded but it's late:    
-    p = Password(password=request.POST["pw_pass"], source_id=1)
+    p = Password(password=request.POST["pw_pass1"], source_id=1)
     p.save()
     
     return HttpResponseRedirect('/id/' + str(p.id))

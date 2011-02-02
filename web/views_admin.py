@@ -15,7 +15,7 @@ def batch(request):
         # Insert the passwords:
         cursor = connection.cursor()
         for chunk in request.FILES['passwords']:
-            cursor.execute("INSERT INTO web_password (password, source_id, processed) VALUES(%s, " + request.POST['source'] + ", 0)", [chunk.rstrip('\r\n')])
+            cursor.execute("INSERT INTO web_password (password, source_id, processed) VALUES(%s, %s, 0)", [chunk.rstrip('\r\n'), int(request.POST['source'])])
 
             #ps = Password(password=chunk.rstrip('\r\n'), source_id=request.POST['source'])            
             #ps.save(batch = True)            

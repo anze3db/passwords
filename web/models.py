@@ -96,7 +96,7 @@ class Password(models.Model):
         
         # We are checking if the password was already entered:
         if(PasswordUnique.objects.all().filter(unique = self.password).count() == 0):       
-            print "Unique"
+
             pu = PasswordUnique()
             pu.unique = self.password
             pu.save()
@@ -104,7 +104,7 @@ class Password(models.Model):
             self.unique = pu  
                                  
         else:
-            print "NOT UNIQUE"
+
             pu = PasswordUnique.objects.get(unique = self.password)
             pu.count += 1            
             pu.save()
